@@ -1,51 +1,49 @@
 #ifndef CLASSES_H_INCLUDED
 #define CLASSES_H_INCLUDED
-class Game{
-    Game(){};
-    ~Game(){};
-    void init();
-    bool is_end;
-    int mineleft;
-
-};
-class Tile{
-    Tile(){};
-    ~Tile(){};
-    bool cellstate;
-    bool minepresence;
-    bool LMBclicked(){
-
-    }
-    bool RMBclicked(){
-
-    }
-    int idtexture;
-};
-class Field{
-    Field(){};
-    ~Field(){};
-};
-class MineCount{
-    MineCount(){};
-    ~MineCount(){};
-    int mineleftfunc();
-};
+#include "tile.h"
+#include "field.h"
+/*class MineCount{
+    public:
+        MineCount(){};
+        ~MineCount(){};
+        int mineleftfunc();
+};*/
 class Time{
-    Time(){};
-    ~Time(){};
-    float sessiontime;
+    public:
+        Time(){};
+        ~Time(){};
+        float sessiontime;
 };
 class Settings{
-    Settings(){};
-    ~Settings(){};
-    int gamemode;
-    int windowmode;
+    public:
+        Settings(){};
+        ~Settings(){};
+        int gamemode;
+        int windowmode;
 };
-class Stats{
-    Stats(){};
-    ~Stats(){};
-    int wins;
-    int loses;
-    int laps;
+/*class Stats{       //currently unused
+    public:
+        Stats(){};
+        ~Stats(){};
+        int wins;
+        int loses;
+        int laps;
+};*/
+class Game{
+    Field *objfield;
+    //MineCount *objmine;
+    Time *objtime;
+    Settings *objsets;
+    //Stats *objstats;
+    Game(){
+        objfield=new Field;
+        //objmine=new MineCount;
+        objtime=new Time;
+        objsets=new Settings;
+        //objstats=new Stats;
+    };
+    ~Game(){};
+    //bool is_end;
+    //int mineleft;
 };
 #endif // CLASSES_H_INCLUDED
