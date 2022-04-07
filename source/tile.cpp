@@ -1,6 +1,9 @@
 #include <tile.h>
+Tile::Tile(){
+    y=x=0;
+}
 Tile::Tile(int X,int Y){
-    x=X;y=Y;
+    //x=X;y=Y;
     cState=0;
     inVicinity=0;
     minePres=0;

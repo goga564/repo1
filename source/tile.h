@@ -7,6 +7,7 @@ class Tile{
         int inVicinity; // number of mines in surrounding area(8 cells) of current; used when placing mines
         int texId; // 0-opened,1-closed;2-flagged closed,3-marked closed
     public:
+        Tile(); //default init with zeros
         Tile(int X,int Y); // init of object(X,Y)
         int getX();int getY(); // get x,y
         bool getState(); // whether is opened or closed
