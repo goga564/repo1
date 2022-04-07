@@ -3,12 +3,12 @@ Tile::Tile(){
     y=x=0;
 }
 Tile::Tile(int X,int Y){
-    //x=X;y=Y;
+    x=X;y=Y;
     cState=0;
     inVicinity=0;
     minePres=0;
     texId=1;
-    //common tile texture(closed) initializes
+    /* draw tile texture */
 }
 int Tile::getX(){
     return x;
@@ -24,22 +24,21 @@ bool Tile::setOpen(){
         cState=1;
         texId=0;
         return 1;
-        //change tile texture here
+        //change tile texture here to opened one (number is overlay)
+        //or to opened one with number
     }
-    return 0; //no permission for signal LMB
+    return 0; //
 }
 int Tile::counter(){
     return inVicinity;
-}
-void Tile::incCounter(){
-    inVicinity++;
 }
 bool Tile::isMined(){
     return minePres;
 }
 void Tile::setMine(){
-    minePres=1;
-    //set texture here
+    if(minePres==0){
+        minePres=1;
+    }
 }
 void Tile::changeTex(){ //an RMB signal use this
     if(cState==1){

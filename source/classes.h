@@ -14,13 +14,6 @@ class Time{
         ~Time(){};
         float sessiontime;
 };
-class Settings{
-    public:
-        Settings(){};
-        ~Settings(){};
-        int gamemode;
-        int windowmode;
-};
 /*class Stats{       //currently unused
     public:
         Stats(){};

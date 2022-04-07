@@ -1,16 +1,22 @@
-#ifndef FIELD_H_INCLUDED
-#define FIELD_H_INCLUDED
+#ifndef FIELD_H
+#define FIELD_H
 #include "tile.h"
 class Field{  // determines game status
         int fX,fY;
-        int mAmount; // number of mines in field
-        void openTile(int x,int y); // opens current Tile
+        int mines; // number of mines in field
         bool exists(int x,int y); // checks whether cell(x,y) exists or not; used for recursive call/when checking on edge
-        bool checkWin(); // determines whether all empty cells opened or not
+        void open(int x,int y); // opens current Tiles[x][y]
+        void openAll(); // used if player has lo
+        bool checkWin(); // determines whether all empty cells are opened or not
+        void changeTex(int x,int y,int to); // tex replacement helper function when RMB clicked
+        //signal handlers
+        void onLMB();
+        void onRMB();
     public:
         Field();
-        Tile **Tiles; //2d array
-        //int getH();int getW(); //sets height and width respectively , values are taken from settings box;
+        ~Field();
+        Tile** Tiles; //2d array
+        //int getH();int getW(); //sets height and width respectively , values are taken from settings box;  OBSOLETE
 
 };
-#endif // FIELD_H_INCLUDED
+#endif
