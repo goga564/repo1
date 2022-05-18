@@ -11,12 +11,16 @@ CONFIG += c++11
 
 SOURCES += \
     field.cpp \
+    game.cpp \
+    gbutton.cpp \
     main.cpp \
     mainwindow.cpp \
     tile.cpp
 
 HEADERS += \
     field.h \
+    game.h \
+    gbutton.h \
     mainwindow.h \
     tile.h
 
@@ -27,3 +31,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    source.qrc
