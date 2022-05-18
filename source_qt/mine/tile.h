@@ -1,40 +1,42 @@
 #ifndef TILE_H
 #define TILE_H
+#include <QWidget>
 #include <QPushButton>
 class Tile : public QPushButton {
         Q_OBJECT;
-        bool cState; // status of cell; 0-closed,1-opened
-        bool minePres; // presence of mine; 0-no,1-in presence
-        int texId; // 0-opened,1-closed;2-flagged closed,3-marked closed - all states used to distinguish opened cell and
+        int x, y; // x,y
+        bool cState; // status of cell; 0-closed, 1-opened
+        int minePres; // presence of mine; 0-no, 1-mine, 2-red mine
+        int texId; // 0-opened, 1-closed; 2-flagged closed, 3-marked closed, 4-flagged closed wrong, 5-marked opened
     public:
         Tile(QWidget *parent = NULL);
         Tile(int X, int Y, QWidget *parent = NULL);
-        Tile& operator =(const Tile& tile){ // assignment
-            if(this != &tile){ // self-assignment avoidance
-                x = tile.x;
-                y = tile.y;
-                cState = tile.cState;
-                inVicinity = tile.inVicinity;
-                minePres = tile.minePres;
-                texId = tile.texId;
-            }
-            return *this;
-        }
-        int x, y; // x,y
-        int getX();int getY(); // get x, y
+        ~Tile();
+        Tile& operator =(const Tile &tile);
+        int getX(); int getY(); // get x, y
         void setOpen(); // set open
         bool getState(); // whether is opened or closed
-        bool isMined(); // get minepresence
+        int getTexId(); // get texId
+        int isMined(); // get minepresence
         void setMine(); // sets mine to cell while init;
-        int inVicinity; // number of mines in surrounding area(8 cells) of current; used when placing mines
-        void changeTexSt(); // put;
+        void setMineRed(); // highlight the mine you blew up
+        void unsetMine(); // if tile were clicked for the first time
+        int inVicinity; // number of mines in surrounding area(8 cells) of current
+    // texture map
+        QPixmap* sprite;
+    // texture handlers
+        void changeTexRMB(); // change state to flag or question mark
+        void changeTexToOpen(); // preparation to opening
+        void changeTexToWrong(); // wrong place to flag
     // paint event
-        virtual void setTex(QPaintEvent *event);
-    // mouse event
-        virtual void mouseReleaseEvent(QMouseEvent *event);
+        virtual void paintEvent(QPaintEvent *event) override;
+    // mouse events
+        virtual void mousePressEvent(QMouseEvent *event) override;
+        virtual void mouseReleaseEvent(QMouseEvent *event) override;
     // signals
     signals:
-        void LMBsignal();
-        void RMBsignal();
+        void LMBreleased();
+        void LMBpressed();
+        void RMBpressed();
 };
 #endif

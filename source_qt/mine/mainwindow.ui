@@ -2,31 +2,53 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>517</width>
+    <height>609</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Minesweeper</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="gridLayoutWidget">
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>801</width>
-      <height>431</height>
+      <x>10</x>
+      <y>40</y>
+      <width>321</width>
+      <height>451</height>
      </rect>
     </property>
-    <layout class="QGridLayout" name="Field">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="2,6">
      <property name="spacing">
-      <number>0</number>
+      <number>18</number>
      </property>
+     <property name="sizeConstraint">
+      <enum>QLayout::SetMinAndMaxSize</enum>
+     </property>
+     <item>
+      <layout class="QVBoxLayout" name="gmbutton"/>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="Field">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetFixedSize</enum>
+       </property>
+       <property name="spacing">
+        <number>0</number>
+       </property>
+      </layout>
+     </item>
     </layout>
    </widget>
   </widget>
@@ -35,7 +57,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>517</width>
      <height>22</height>
     </rect>
    </property>
