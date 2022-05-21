@@ -1,12 +1,10 @@
 /* unfinished */
 #ifndef GAME_H
 #define GAME_H
-
-
+#include <QWidget>
 #include "tile.h"
 #include "field.h"
 #include "gbutton.h"
-#include <QWidget>
 class MainGame : public QWidget {
         Q_OBJECT
     public:

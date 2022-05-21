@@ -10,19 +10,23 @@ CONFIG += c++11
 #DEFINES += QT_LOGGING_TO_CONSOLE
 
 SOURCES += \
+    counter.cpp \
     field.cpp \
     game.cpp \
     gbutton.cpp \
     main.cpp \
     mainwindow.cpp \
-    tile.cpp
+    tile.cpp \
+    timer.cpp
 
 HEADERS += \
+    counter.h \
     field.h \
     game.h \
     gbutton.h \
     mainwindow.h \
-    tile.h
+    tile.h \
+    timer.h
 
 FORMS += \
     mainwindow.ui

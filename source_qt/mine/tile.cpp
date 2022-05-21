@@ -8,7 +8,6 @@
 #include <QDebug>
 Tile::Tile(QWidget *parent) : QPushButton(parent) {
     y = x = 0;
-    sprite = new QPixmap(QString(":/images/source.png"));
 }
 Tile::Tile(int X, int Y, QWidget *parent) : QPushButton(parent) {
     x = X; y = Y;

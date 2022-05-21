@@ -9,40 +9,71 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>517</width>
-    <height>609</height>
+    <width>720</width>
+    <height>800</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>720</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>720</width>
+    <height>800</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Minesweeper</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="maximumSize">
+    <size>
+     <width>850</width>
+     <height>850</height>
+    </size>
+   </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>5</width>
+     <height>5</height>
+    </size>
+   </property>
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>321</width>
+      <x>0</x>
+      <y>20</y>
+      <width>341</width>
       <height>451</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout" stretch="2,6">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0">
      <property name="spacing">
-      <number>18</number>
+      <number>8</number>
      </property>
      <property name="sizeConstraint">
       <enum>QLayout::SetMinAndMaxSize</enum>
      </property>
      <item>
-      <layout class="QVBoxLayout" name="gmbutton"/>
+      <layout class="QHBoxLayout" name="hlayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+      </layout>
      </item>
      <item>
       <layout class="QGridLayout" name="Field">
        <property name="sizeConstraint">
-        <enum>QLayout::SetFixedSize</enum>
+        <enum>QLayout::SetMinAndMaxSize</enum>
        </property>
        <property name="spacing">
         <number>0</number>
@@ -57,7 +88,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>517</width>
+     <width>720</width>
      <height>22</height>
     </rect>
    </property>

@@ -2,7 +2,6 @@
 #include "gbutton.h"
 #include "field.h"
 #include "mainwindow.h"
-//#include <QObject>
 //#include <QTimer> // for main game in main window
 //#include <QEventLoop> // for menu in main window
 #include <QRandomGenerator>
@@ -11,11 +10,15 @@ Field::Field(int fX, int fY, int mines, QWidget *parent) : QWidget(parent){
     this->fX = fX; this->fY = fY;
     this->mines = mines;
     status = 1; // field is clickable
-    gmbutton = new GameMainButton();
-    gmbutton->setFixedSize(24, 23);
-    gmbutton->setStyleSheet(QString("background-color: black;"));
+    themeId = 0;
+    spr = new QPixmap(QString(":/images/source.png")); spr2 = new QPixmap(QString(":/images/source2.png"));
+    spr3 = new QPixmap(QString(":/images/source3.png"));
+    gmbutton = new GameMainButton(parent); tbutton = new ThemeButton(parent);
+    gmbutton->sprite = spr2; tbutton->sprite = spr3;
     connect(gmbutton, SIGNAL(LMBpressed()), SLOT(ongmButtonLMBpressed()), Qt::DirectConnection);
     connect(gmbutton, SIGNAL(LMBreleased()), SLOT(ongmButtonLMBreleased()), Qt::DirectConnection);
+    connect(tbutton, SIGNAL(LMBpressed()), SLOT(ontButtonLMBpressed()), Qt::DirectConnection);
+    connect(tbutton, SIGNAL(LMBreleased()), SLOT(ontButtonLMBreleased()), Qt::DirectConnection);
     Tiles = new Tile* [fX];
     for (int i = 0; i < fX; ++i){
         Tiles[i] = new Tile [fY];
@@ -27,6 +30,7 @@ Field::Field(int fX, int fY, int mines, QWidget *parent) : QWidget(parent){
             Tiles[i][j].setFixedSize(16, 16);
             Tiles[i][j].setStyleSheet(QString("background-color: black;"));
             Tiles[i][j].setMouseTracking(1);
+            Tiles[i][j].sprite = spr;
             connect(&Tiles[i][j], SIGNAL(LMBreleased()), SLOT(onTileLMBreleased()), Qt::DirectConnection);
             connect(&Tiles[i][j], SIGNAL(LMBpressed()), SLOT(onTileLMBpressed()), Qt::DirectConnection);
             connect(&Tiles[i][j], SIGNAL(RMBpressed()), SLOT(onTileRMBreleased()), Qt::DirectConnection);
@@ -39,7 +43,7 @@ Field::~Field(){
         delete[] Tiles[i];
     }
     delete[] Tiles;
-    delete gmbutton;
+    delete gmbutton; delete tbutton;
 }
 bool Field::exists(int x, int y){
     return x >= 0 && y >= 0 && x < fX && y < fY;
@@ -103,32 +107,35 @@ void Field::setMines(){
     for (int x = 0; x < fX; ++x){
         for (int y = 0; y < fY; ++y){
             if (Tiles[x][y].isMined()){
-                if (exists(x-1,y+1)){
-                    Tiles[x-1][y+1].inVicinity++;
-                }
-                if (exists(x-1,y)){
-                    Tiles[x-1][y].inVicinity++;
-                }
-                if (exists(x-1,y-1)){
-                    Tiles[x-1][y-1].inVicinity++;
-                }
-                if (exists(x,y-1)){
-                    Tiles[x][y-1].inVicinity++;
-                }
-                if (exists(x+1,y-1)){
-                    Tiles[x+1][y-1].inVicinity++;
-                }
-                if (exists(x+1,y)){
-                    Tiles[x+1][y].inVicinity++;
-                }
-                if (exists(x+1,y+1)){
-                    Tiles[x+1][y+1].inVicinity++;
-                }
-                if (exists(x,y+1)){
-                    Tiles[x][y+1].inVicinity++;
-                }
+                incVicinity(x,y);
             }
         }
+    }
+}
+void Field::incVicinity(int x, int y){
+    if (exists(x-1,y+1)){
+        Tiles[x-1][y+1].inVicinity++;
+    }
+    if (exists(x-1,y)){
+        Tiles[x-1][y].inVicinity++;
+    }
+    if (exists(x-1,y-1)){
+        Tiles[x-1][y-1].inVicinity++;
+    }
+    if (exists(x,y-1)){
+        Tiles[x][y-1].inVicinity++;
+    }
+    if (exists(x+1,y-1)){
+        Tiles[x+1][y-1].inVicinity++;
+    }
+    if (exists(x+1,y)){
+        Tiles[x+1][y].inVicinity++;
+    }
+    if (exists(x+1,y+1)){
+        Tiles[x+1][y+1].inVicinity++;
+    }
+    if (exists(x,y+1)){
+        Tiles[x][y+1].inVicinity++;
     }
 }
 void Field::onTileLMBreleased(){
@@ -137,36 +144,14 @@ void Field::onTileLMBreleased(){
         if (!started){
             if (tileptr->isMined()){
                 tileptr->unsetMine();
+                tileptr->update();
                 tileptr->changeTexToOpen();
-                for (int t1, t2;;){
+                for (int t1, t2;;){ // bullshit
                     t1 = QRandomGenerator::global()->bounded(0, fX) % fX; t2 = QRandomGenerator::global()->bounded(0, fY) % fY;
                     if (!(Tiles[t1][t2].isMined())){
                         Tiles[t1][t2].setMine();
                         Tiles[t1][t2].update();
-                        if (exists(t1-1,t2+1)){
-                            Tiles[t1-1][t2+1].inVicinity++;
-                        }
-                        if (exists(t1-1,t2)){
-                            Tiles[t1-1][t2].inVicinity++;
-                        }
-                        if (exists(t1-1,t2-1)){
-                            Tiles[t1-1][t2-1].inVicinity++;
-                        }
-                        if (exists(t1,t2-1)){
-                            Tiles[t1][t2-1].inVicinity++;
-                        }
-                        if (exists(t1+1,t2-1)){
-                            Tiles[t1+1][t2-1].inVicinity++;
-                        }
-                        if (exists(t1+1,t2)){
-                            Tiles[t1+1][t2].inVicinity++;
-                        }
-                        if (exists(t1+1,t2+1)){
-                            Tiles[t1+1][t2+1].inVicinity++;
-                        }
-                        if (exists(t1,t2+1)){
-                            Tiles[t1][t2+1].inVicinity++;
-                        }
+                        incVicinity(t1,t2);
                         break;
                     }
                     else{
@@ -177,7 +162,7 @@ void Field::onTileLMBreleased(){
             open(tileptr->getX(), tileptr->getY());
             gmbutton->setTexId(0);
             started = 1;
-            // emit start(); // for external use
+            emit start(); // for external use
             return;
         }
         else if (tileptr->getTexId() != 2){
@@ -188,7 +173,7 @@ void Field::onTileLMBreleased(){
                 tileptr->setMineRed();
                 gmbutton->setTexId(4);
                 status = 0;
-                //emit finish(); // for external use
+                emit finish(); // for external use
                 openAll();
                 return;
             }
@@ -196,7 +181,7 @@ void Field::onTileLMBreleased(){
             if (checkWin()){
                 gmbutton->setTexId(3);
                 status = 0;
-                //emit finish(); // for external use
+                emit finish(); // for external use
                 openAll();
                 return;
             }
@@ -247,4 +232,19 @@ void Field::ongmButtonLMBreleased(){
         }
     }
     setMines();
+}
+void Field::ontButtonLMBpressed(){
+    tbutton->setDown(1);
+    tbutton->setTexId(1);
+}
+void Field::ontButtonLMBreleased(){
+    tbutton->setDown(0);
+    tbutton->setTexId(0);
+    themeId = tbutton->changeTheme(spr, spr2, spr3, ++themeId);
+    gmbutton->update();
+    for (int i = 0; i < fX; ++i){
+        for (int j = 0; j < fY; ++j){
+            Tiles[i][j].update();
+        }
+    }
 }
