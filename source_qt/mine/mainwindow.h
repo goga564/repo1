@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include "field.h"
-
+#include "timer.h"
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -14,6 +14,7 @@ class MainWindow : public QMainWindow{
         MainWindow(QWidget *parent = nullptr);
         ~MainWindow();
         Field* f;
+        SessionTimer* timer;
     private:
         Ui::MainWindow *ui;
 };

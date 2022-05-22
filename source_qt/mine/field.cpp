@@ -2,8 +2,6 @@
 #include "gbutton.h"
 #include "field.h"
 #include "mainwindow.h"
-//#include <QTimer> // for main game in main window
-//#include <QEventLoop> // for menu in main window
 #include <QRandomGenerator>
 #include <QDebug>
 Field::Field(int fX, int fY, int mines, QWidget *parent) : QWidget(parent){
@@ -84,7 +82,7 @@ void Field::openAll(){
     }
 }
 bool Field::checkWin(){
-    int n = (fX * fY) - mines;
+    int n = (fX * fY) - mines; // number of no mine tiles
     for (int i = 0; i < fX; ++i){
         for (int j = 0; j < fX; ++j){
             n -= Tiles[i][j].getState();
@@ -232,6 +230,8 @@ void Field::ongmButtonLMBreleased(){
         }
     }
     setMines();
+    emit finish();
+    emit finishinst();
 }
 void Field::ontButtonLMBpressed(){
     tbutton->setDown(1);

@@ -48,6 +48,7 @@ void GameMainButton::mouseReleaseEvent(QMouseEvent *event){
         emit LMBreleased();
     }
 }
+
 // theme button
 ThemeButton::ThemeButton(QWidget *parent) : QPushButton(parent){
     texId = 0;

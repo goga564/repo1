@@ -40,5 +40,6 @@ class Field : public QWidget{
     signals:
         void start();
         void finish(); // for external use
+        void finishinst();
 };
 #endif
